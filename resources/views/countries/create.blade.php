@@ -1,13 +1,14 @@
 <!-- @extends('layouts.app') -->
 @extends('admin_template')
+
 @section('countries', '| Create New Country')
 
 @section('content')
+<div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-
-        <h3>Create New Country</h3>
-        <hr>
+        <div class="col-md-10 col-md-offset-1">
+       <!--  <h3>New Country</h3> -->
+        <hr width="100%">
         {{-- @include ('errors.list') --}}
 
                     @if(session()->has('status'))
@@ -47,5 +48,6 @@
         </div>
         </div>
     </div>
+</div>
 
 @endsection

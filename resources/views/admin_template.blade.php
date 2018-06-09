@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Starter</title>
+  <title>TDS | AM</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -263,7 +263,7 @@ desired effect
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
-        <li class="header">HEADER</li>
+        <li class="header">MANAGE</li>
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
         <li><a href="{{ route('countries.index')}}"><i class="fa fa-link"></i> <span>Country</span></a></li>
@@ -279,9 +279,11 @@ desired effect
           </ul>
         </li>
 
+        <li class="header">REPORTS</li>
+
 
          <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Reports</span>
+          <a href="#"><i class="fa fa-link"></i> <span>Select Report</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

@@ -1,8 +1,10 @@
 @extends('admin_template')
+
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-11 col-md-offset-0">
+              <p></p>
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3>Countries List</h3></div>
                     
@@ -14,7 +16,7 @@
                         </div>
                     @endif
 
-                  {{--  <div class="btn btn-primary"><a href="{{route('countries.create')}}"> Create New</a></div>--}}
+               <!--    {{--  <div class="btn btn-primary"><a href="{{route('countries.create')}}"> Create New</a></div>--}} -->
                   <p></p>
                     <div><a class="btn btn-primary" href="{{route('countries.create')}}">Create New</a> </div>
                     <div class="panel-heading">{{--Page {{ $countries->currentPage() }} of {{ $countries->lastPage() }}--}}</div>
