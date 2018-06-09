@@ -29,3 +29,5 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 //Country Controller
 Route::resource('countries', 'CountryController');
+//Location Controller
+Route::resource('locations', 'LocationController');

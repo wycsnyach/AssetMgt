@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Location;
 class LocationController extends Controller
 {
     /**
@@ -14,6 +14,8 @@ class LocationController extends Controller
     public function index()
     {
         //
+        $locations=Location::orderBy('id', 'desc')->paginate(5);
+        return view('locations.index', compact('locations'));
     }
 
     /**
@@ -24,6 +26,7 @@ class LocationController extends Controller
     public function create()
     {
         //
+        return view('locations.create');
     }
 
     /**
@@ -35,6 +38,19 @@ class LocationController extends Controller
     public function store(Request $request)
     {
         //
+       $this->validate($request,[
+           /* 'id' => 'required',*/
+            'name' => 'required'
+
+        ]);
+
+       $input = $request->all();
+       $location =  Location::create($input);
+       $name= $location ->name;
+
+        //Session::flash('flash_message', 'Task successfully added!');
+        return redirect()->back() -> with("status","Added " .$name. " successfully");
+        
     }
 
     /**
@@ -57,6 +73,8 @@ class LocationController extends Controller
     public function edit($id)
     {
         //
+        $location=Location::find($id);
+        return view('locations.edit', compact('location'));
     }
 
     /**
@@ -69,6 +87,25 @@ class LocationController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this -> validate($request,
+            [
+                
+                'name' => 'required'
+            ]);
+
+        $location = Location::find($id);
+        $location->name = $request -> name;
+        
+        $locationSaved = $location->save();
+        $name = $request -> name;
+        /* if saved */
+
+        if( $locationSaved == 1 ){
+
+            return redirect()->back()-> with('status','Saved '.$name.' succesfully');
+        }else{
+            return redirect()->back()-> with('status','Failed '.$name.' not saved');
+        }
     }
 
     /**
@@ -80,5 +117,14 @@ class LocationController extends Controller
     public function destroy($id)
     {
         //
+         $location = Location::findOrFail($id);
+      
+        $name = $location->name;
+        $location->delete();
+
+        //Session::flash('flash_message', 'Task successfully deleted!');
+
+        //return redirect()->route('tasks.index');
+         return redirect()->back()->with('status','Deleted '.$name.' succesfully');
     }
 }

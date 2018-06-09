@@ -1,4 +1,4 @@
-# Laravel 5.4 integrated with Admin LTE
+# Asset Management
 This project is **Laravel 5.4.28** integrated with **Admin LTE-2.3.11**
 
 ## How to Install
@@ -8,4 +8,4 @@ This project is **Laravel 5.4.28** integrated with **Admin LTE-2.3.11**
 - Run `php artisan serve`
 - Open `localhost:8000\admin`
 
-License [MIT](http://opensource.org/licenses/MIT)
+License [TDS](http://techdevsystems.com/licenses)
