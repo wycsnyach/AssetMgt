@@ -267,8 +267,9 @@ desired effect
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
         <li><a href="{{ route('countries.index')}}"><i class="fa fa-link"></i> <span>Country</span></a></li>
-         <li><a href="{{ route('locations.index')}}"><i class="fa fa-link"></i> <span>Location</span></a></li>
-          <li><a href="{{ route('statuses.index')}}"><i class="fa fa-link"></i> <span>Assest Status</span></a></li>
+        <li><a href="{{ route('locations.index')}}"><i class="fa fa-link"></i> <span>Location</span></a></li>
+        <li><a href="{{ route('statuses.index')}}"><i class="fa fa-link"></i> <span>Assest Status</span></a></li>
+         <li><a href="{{ route('people.index')}}"><i class="fa fa-link"></i> <span>Person</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Settings</span>
             <span class="pull-right-container">
