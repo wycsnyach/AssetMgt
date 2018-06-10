@@ -37,7 +37,7 @@ Route::resource('statuses', 'StatusController');
 
 Route::resource('people', 'PersonController');
 
-
+Route::resource('categories', 'CategoryController');
 /*Route::get('people', 'PersonController@getIndex')->name('people'); */
 
 /*Route::get('people.data', 'PersonController@personData')->name('people.data');*/

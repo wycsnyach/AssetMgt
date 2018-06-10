@@ -270,6 +270,7 @@ desired effect
         <li><a href="{{ route('locations.index')}}"><i class="fa fa-link"></i> <span>Location</span></a></li>
         <li><a href="{{ route('statuses.index')}}"><i class="fa fa-link"></i> <span>Assest Status</span></a></li>
          <li><a href="{{ route('people.index')}}"><i class="fa fa-link"></i> <span>Person</span></a></li>
+         <li><a href="{{ route('categories.index')}}"><i class="fa fa-link"></i> <span>Asset Category</span></a></
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Settings</span>
             <span class="pull-right-container">
