@@ -31,3 +31,6 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::resource('countries', 'CountryController');
 //Location Controller
 Route::resource('locations', 'LocationController');
+
+//StatusController
+Route::resource('statuses', 'StatusController');
