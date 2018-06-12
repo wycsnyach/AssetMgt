@@ -41,3 +41,9 @@ Route::resource('categories', 'CategoryController');
 /*Route::get('people', 'PersonController@getIndex')->name('people'); */
 
 /*Route::get('people.data', 'PersonController@personData')->name('people.data');*/
+
+Route::resource('assetsubtypes', 'AssetSubTypeController');
+Route::post('assetsubtypes/search', 'AssetSubTypeController@search')->name('assetsubtypes.search');
+
+Route::resource('cyclephases', 'CyclePhasesController');
+Route::post('cyclephases/search', 'CyclePhasesController@search')->name('cyclephases.search');
