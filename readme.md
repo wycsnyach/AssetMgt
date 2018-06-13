@@ -1,5 +1,5 @@
-# Asset Management
-This project is **Laravel 5.4.28** integrated with **Admin LTE-2.3.11**
+# ASM
+This project is Built in **Laravel 5.4.28** integrated with **Admin LTE-2.3.11**
 
 ## How to Install
 - Download this repo & extract or clone using Git
