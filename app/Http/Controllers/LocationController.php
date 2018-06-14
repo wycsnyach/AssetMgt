@@ -7,6 +7,15 @@ use App\Location;
 class LocationController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -14,8 +23,12 @@ class LocationController extends Controller
     public function index()
     {
         //
-        $locations=Location::orderBy('id', 'desc')->paginate(5);
-        return view('locations.index', compact('locations'));
+        /*$locations=Location::orderBy('id', 'desc')->paginate(5);
+        return view('locations.index', compact('locations'));*/
+
+        $locations = Location::paginate(5);
+
+        return view('system-mgmt/locations/index', ['locations' => $locations]);
     }
 
     /**
@@ -26,7 +39,7 @@ class LocationController extends Controller
     public function create()
     {
         //
-        return view('locations.create');
+        return view('system-mgmt/locations.create');
     }
 
     /**
@@ -38,18 +51,15 @@ class LocationController extends Controller
     public function store(Request $request)
     {
         //
-       $this->validate($request,[
-           /* 'id' => 'required',*/
-            'name' => 'required'
-
+        $this->validateInput($request);
+         Location::create([
+            'name' => $request['name']
         ]);
 
-       $input = $request->all();
-       $location =  Location::create($input);
-       $name= $location ->name;
+        return redirect()->intended('system-management/locations') -> with("status","Added successfully");
 
         //Session::flash('flash_message', 'Task successfully added!');
-        return redirect()->back() -> with("status","Added " .$name. " successfully");
+       // return redirect()->back() -> with("status","Added " .$name. " successfully");
         
     }
 
@@ -73,8 +83,16 @@ class LocationController extends Controller
     public function edit($id)
     {
         //
-        $location=Location::find($id);
-        return view('locations.edit', compact('location'));
+    /*    $location=Location::find($id);
+        return view('locations.edit', compact('location'));*/
+
+        $locations = Location::find($id);
+        // Redirect to department list if updating department wasn't existed
+        if ($locations == null || count($locations) == 0) {
+            return redirect()->intended('/system-management/locations');
+        }
+
+        return view('system-mgmt/locations/edit', ['locations' => $locations]);
     }
 
     /**
@@ -87,7 +105,18 @@ class LocationController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this -> validate($request,
+
+        $locations = Location::findOrFail($id);
+        $this->validateInput($request);
+        $input = [
+            'name' => $request['name']
+        ];
+        Location::where('id', $id)
+            ->update($input);
+        
+        return redirect()->intended('system-management/locations');
+
+        /*$this -> validate($request,
             [
                 
                 'name' => 'required'
@@ -98,14 +127,14 @@ class LocationController extends Controller
         
         $locationSaved = $location->save();
         $name = $request -> name;
-        /* if saved */
+      
 
         if( $locationSaved == 1 ){
 
             return redirect()->back()-> with('status','Saved '.$name.' succesfully');
         }else{
             return redirect()->back()-> with('status','Failed '.$name.' not saved');
-        }
+        }*/
     }
 
     /**
@@ -117,14 +146,48 @@ class LocationController extends Controller
     public function destroy($id)
     {
         //
-         $location = Location::findOrFail($id);
+
+         Location::where('id', $id)->delete();
+         return redirect()->intended('system-management/locations') -> with('status','succesfully');
+        /* $location = Location::findOrFail($id);
       
         $name = $location->name;
         $location->delete();
-
-        //Session::flash('flash_message', 'Task successfully deleted!');
-
-        //return redirect()->route('tasks.index');
-         return redirect()->back()->with('status','Deleted '.$name.' succesfully');
+         return redirect()->back()->with('status','Deleted '.$name.' succesfully');*/
     }
+
+/**
+     * Search department from database base on some specific constraints
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *  @return \Illuminate\Http\Response
+     */
+    public function search(Request $request) {
+        $constraints = [
+            'name' => $request['name']
+            ];
+
+       $locations = $this->doSearchingQuery($constraints);
+       return view('system-mgmt/locations/index', ['locations' => $locations, 'searchingVals' => $constraints]);
+    }
+
+    private function doSearchingQuery($constraints) {
+        $query = Location::query();
+        $fields = array_keys($constraints);
+        $index = 0;
+        foreach ($constraints as $constraint) {
+            if ($constraint != null) {
+                $query = $query->where( $fields[$index], 'like', '%'.$constraint.'%');
+            }
+
+            $index++;
+        }
+        return $query->paginate(5);
+    }
+    private function validateInput($request) {
+        $this->validate($request, [
+        'name' => 'required|max:60|unique:locations'
+    ]);
+    }
+
 }

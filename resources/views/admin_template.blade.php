@@ -282,6 +282,7 @@ desired effect
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a href="{{ url('system-management/locations')}}"><i class="fa fa-bell-o"></i>Asset Location</a></li>
             <li><a href="{{ url('system-management/cyclephases')}}"><i class="fa fa-bell-o"></i>Cycle Phases</a></li>
             <li><a href="{{ url('system-management/assetsubtypes')}}"><i class="fa fa-bell-o"></i>Asset Sub Type</a></li>
           </ul>

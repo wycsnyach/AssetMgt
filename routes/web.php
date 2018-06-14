@@ -59,3 +59,6 @@ Route::post('system-management/cyclephases/search', 'CyclePhasesController@searc
 
 Route::resource('system-management/assetsubtypes', 'AssetSubTypesController');
 Route::post('system-management/assetsubtypes/search', 'AssetSubTypesController@search')->name('assetsubtypes.search');
+
+Route::resource('system-management/locations', 'LocationController');
+Route::post('system-management/locations/search', 'LocationController@search')->name('locations.search');
