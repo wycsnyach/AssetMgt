@@ -29,6 +29,7 @@ class AssetTypesController extends Controller
         ->leftJoin('assetsubtypes', 'assettypes.asset_subtype_code', '=', 'assetsubtypes.id')
         ->select('assettypes.id', 'assettypes.name', 'assetsubtypes.name as assetsubtypes_name', 'assetsubtypes.id as asset_subtype_code')
         ->paginate(5);
+        //return view('system-mgmt/assettypes/index', ['assettypes' => $assettypes]);
         return view('assettypes.index', ['assettypes' => $assettypes]);
     }
 
@@ -41,6 +42,7 @@ class AssetTypesController extends Controller
     {
         //
           $assetsubtypes = AssetTypes::all();
+            //return view('system-mgmt/assettypes/create', ['assetsubtypes' => $assetsubtypes]);
             return view('assettypes.create', ['assetsubtypes' => $assetsubtypes]);
     }
 
@@ -60,7 +62,8 @@ class AssetTypesController extends Controller
             'asset_subtype_code' => $request['asset_subtype_code']
         ]);
 
-        return redirect()->intended('assettypes');
+       // return redirect()->intended('system-management/assettypes');
+       return redirect()->intended('assettypes');
     }
 
     /**
@@ -86,10 +89,12 @@ class AssetTypesController extends Controller
         $assettypes = AssetTypes::find($id);
         // Redirect to city list if updating city wasn't existed
         if ($assettypes == null || count($assettypes) == 0) {
+            //return redirect()->intended('/system-management/assettypes');
             return redirect()->intended('assettypes');
         }
 
         $assetsubtypes = AssetSubTypes::all();
+        //return view('system-mgmt/assettypes/edit', ['assettypes' => $assettypes, 'assetsubtypes' => $assetsubtypes]);
         return view('assettypes.edit', ['assettypes' => $assettypes, 'assetsubtypes' => $assetsubtypes]);
     }
 
@@ -115,6 +120,7 @@ class AssetTypesController extends Controller
         AssetTypes::where('id', $id)
             ->update($input);
         
+        //return redirect()->intended('system-management/assettypes');
         return redirect()->intended('assettypes');
     }
 
@@ -128,6 +134,7 @@ class AssetTypesController extends Controller
     {
         //
         AssetTypes::where('id', $id)->delete();
+         //return redirect()->intended('system-management/assettypes');
          return redirect()->intended('assettypes');
     }
 
@@ -150,6 +157,7 @@ class AssetTypesController extends Controller
             ];
 
        $assettypes = $this->doSearchingQuery($constraints);
+       //return view('system-mgmt/assettypes/index', ['assettypes' => $assettypes, 'searchingVals' => $constraints]);
        return view('assettypes.index', ['assettypes' => $assettypes, 'searchingVals' => $constraints]);
     }
 

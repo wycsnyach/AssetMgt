@@ -265,25 +265,25 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">MANAGE</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="{{ route('countries.index')}}"><i class="fa fa-link"></i> <span>Country</span></a></li>
-        <li><a href="{{ route('locations.index')}}"><i class="fa fa-link"></i> <span>Location</span></a></li>
-        <li><a href="{{ route('statuses.index')}}"><i class="fa fa-link"></i> <span>Assest Status</span></a></li>
-        <li><a href="{{ route('people.index')}}"><i class="fa fa-link"></i> <span>Person</span></a></li>
-        <li><a href="{{ route('categories.index')}}"><i class="fa fa-link"></i> <span>Asset Category</span></a></li>
-        <li><a href="{{ route('assetsubtypes.index')}}"><i class="fa fa-link"></i> <span>Asset Sub Type</span></a></li>
-        <li><a href="{{ route('cyclephases.index')}}"><i class="fa fa-link"></i> <span>Asset Cycle Phases</span></a></li>
-        <li><a href="{{ route('assettypes.index')}}"><i class="fa fa-link"></i> <span>Asset Types</span></a></li>
+        <li><a href="{{ route('locations.index')}}"><i class="fa fa-home"></i> <span>Location</span></a></li>
+        <li><a href="{{ route('statuses.index')}}"><i class="fa fa-circle"></i> <span>Assest Status</span></a></li>
+        <li><a href="{{ route('people.index')}}"><i class="fa fa-users"></i> <span>Person</span></a></li>
+        <li><a href="{{ route('categories.index')}}"><i class="fa fa-circle"></i> <span>Asset Category</span></a></li>
+        <!-- <li><a href="{{ route('assetsubtypes.index')}}"><i class="fa fa-circle"></i> <span>Asset Sub Type</span></a></li>
+        <li><a href="{{ route('cyclephases.index')}}"><i class="fa fa-circle"></i> <span>Asset Cycle Phases</span></a></li> -->
+        <li><a href="{{ route('assettypes.index')}}"><i class="fa fa-circle"></i> <span>Asset Types</span></a></li>
         
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Settings</span>
+          <a href="#"><i class="fa fa-gears"></i> <span>System Management</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Locations Management</a></li>
-            <li><a href="#">Vendor Management</a></li>
+            <li><a href="{{ url('system-management/cyclephases')}}"><i class="fa fa-bell-o"></i>Cycle Phases</a></li>
+            <li><a href="{{ url('system-management/assetsubtypes')}}"><i class="fa fa-bell-o"></i>Asset Sub Type</a></li>
           </ul>
         </li>
 

@@ -26,7 +26,8 @@ class CyclePhasesController extends Controller
         //
         $cyclephases = Cyclephases::paginate(5);
 
-        return view('cyclephases.index', ['cyclephases' => $cyclephases]);
+        //return view('cyclephases.index', ['cyclephases' => $cyclephases]);
+        return view('system-mgmt/cyclephases.index', ['cyclephases' => $cyclephases]);
     }
 
     /**
@@ -37,7 +38,8 @@ class CyclePhasesController extends Controller
     public function create()
     {
         //
-        return view('cyclephases.create');
+        //return view('cyclephases.create');
+        return view('system-mgmt/cyclephases.create');
     }
 
     /**
@@ -54,7 +56,8 @@ class CyclePhasesController extends Controller
             'name'=>$request['name'],
             'cycle_description'=>$request['cycle_description']
         ]);
-        return redirect()->intended('cyclephases');
+        return redirect()->intended('system-management/cyclephases');
+        // return redirect()->intended('cyclephases');
     }
 
     /**
@@ -79,10 +82,12 @@ class CyclePhasesController extends Controller
         //
         $cyclephases = Cyclephases::find($id);
         if($cyclephases == null || count($cyclephases) == 0){
-            return redirect()->intended('cyclephases');
+            return redirect()->intended('/system-management/cyclephases');
+            //return redirect()->intended('cyclephases');
         }
 
-        return view('cyclephases.edit', ['cyclephases' => $cyclephases]);
+        return view('system-mgmt/cyclephases.edit', ['cyclephases' => $cyclephases]);
+        // return view('cyclephases.edit', ['cyclephases' => $cyclephases]);
     }
 
     /**
@@ -117,7 +122,8 @@ class CyclePhasesController extends Controller
         Cyclephases::where('id', $id)
             ->update($input);
         
-        return redirect()->intended('cyclephases');
+        return redirect()->intended('system-management/cyclephases');
+        // return redirect()->intended('cyclephases');
     }
 
     /**
@@ -130,7 +136,8 @@ class CyclePhasesController extends Controller
     {
         //
         Cyclephases::where('id', $id)->delete();
-            return redirect()->intended('cyclephases');
+            return redirect()->intended('system-management/cyclephases');
+            //return redirect()->intended('cyclephases');
     }
 
     /**
@@ -145,7 +152,8 @@ class CyclePhasesController extends Controller
             'name' => $request['name']
         ];
         $cyclephases = $this->doSearchingQuery($constraints);
-        return view('cyclephases.index',['cyclephases' => $cyclephases, 'searchingVals' => $constraints]);
+        return view('system-mgmt/cyclephases.index',['cyclephases' => $cyclephases, 'searchingVals' => $constraints]);
+        // return view('cyclephases.index',['cyclephases' => $cyclephases, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints){

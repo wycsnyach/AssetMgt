@@ -1,4 +1,4 @@
-@extends('assetsubtypes.base')
+@extends('system-mgmt.assetsubtypes.base')
 @section('action-content')
     <!-- Main content -->
     <section class="content">
