@@ -4,11 +4,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Types Management
+        People Mangement
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> System Mangement</a></li>
-        <li class="active">Asset Types </li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Employee Mangement</a></li>
+        <li class="active">People</li>
       </ol>
     </section>
     @yield('action-content')

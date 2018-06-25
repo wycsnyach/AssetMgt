@@ -30,7 +30,7 @@ class AssetTypesController extends Controller
         ->select('assettypes.id', 'assettypes.name', 'assetsubtypes.name as assetsubtypes_name', 'assetsubtypes.id as asset_subtype_code')
         ->paginate(5);
         //return view('system-mgmt/assettypes/index', ['assettypes' => $assettypes]);
-        return view('assettypes.index', ['assettypes' => $assettypes]);
+        return view('system-mgmt/assettypes.index', ['assettypes' => $assettypes]);
     }
 
     /**
@@ -41,9 +41,9 @@ class AssetTypesController extends Controller
     public function create()
     {
         //
-          $assetsubtypes = AssetTypes::all();
+          $assetsubtypes = AssetSubTypes::all();
             //return view('system-mgmt/assettypes/create', ['assetsubtypes' => $assetsubtypes]);
-            return view('assettypes.create', ['assetsubtypes' => $assetsubtypes]);
+            return view('system-mgmt/assettypes.create', ['assetsubtypes' => $assetsubtypes]);
     }
 
     /**
@@ -63,7 +63,7 @@ class AssetTypesController extends Controller
         ]);
 
        // return redirect()->intended('system-management/assettypes');
-       return redirect()->intended('assettypes');
+       return redirect()->intended('system-management/assettypes');
     }
 
     /**
@@ -90,12 +90,12 @@ class AssetTypesController extends Controller
         // Redirect to city list if updating city wasn't existed
         if ($assettypes == null || count($assettypes) == 0) {
             //return redirect()->intended('/system-management/assettypes');
-            return redirect()->intended('assettypes');
+            return redirect()->intended('/system-management/assettypes');
         }
 
         $assetsubtypes = AssetSubTypes::all();
         //return view('system-mgmt/assettypes/edit', ['assettypes' => $assettypes, 'assetsubtypes' => $assetsubtypes]);
-        return view('assettypes.edit', ['assettypes' => $assettypes, 'assetsubtypes' => $assetsubtypes]);
+        return view('system-mgmt/assettypes.edit', ['assettypes' => $assettypes, 'assetsubtypes' => $assetsubtypes]);
     }
 
     /**
@@ -121,7 +121,7 @@ class AssetTypesController extends Controller
             ->update($input);
         
         //return redirect()->intended('system-management/assettypes');
-        return redirect()->intended('assettypes');
+        return redirect()->intended('system-management/assettypes');
     }
 
     /**
@@ -135,12 +135,12 @@ class AssetTypesController extends Controller
         //
         AssetTypes::where('id', $id)->delete();
          //return redirect()->intended('system-management/assettypes');
-         return redirect()->intended('assettypes');
+         return redirect()->intended('system-management/assettypes');
     }
 
 
     public function loadAssettypes($asset_subtype_code) {
-        $assettypes = Category::where('asset_subtype_code', '=', $asset_subtype_code)->get(['id', 'name']);
+        $assettypes = AssetSubTypes::where('asset_subtype_code', '=', $asset_subtype_code)->get(['id', 'name']);
 
         return response()->json($assettypes);
     }

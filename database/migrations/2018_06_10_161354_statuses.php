@@ -16,7 +16,7 @@ class Statuses extends Migration
         //
         Schema::create('statuses', function (Blueprint $table) {
             $table->increments('id',true);
-            $table->string('description',70);
+            $table->string('name',70);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

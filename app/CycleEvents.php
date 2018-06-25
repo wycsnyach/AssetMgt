@@ -4,21 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Country extends Model
+class CycleEvents extends Model
 {
     //
-    /*protected $fillable =[
-    	'id','country_code','name','created_at','updated_at'
-    ];*/
 
-
-    //
+      //
        /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'countries';
+    protected $table = 'lifecycleevents';
     
     /**
     * The attributes that aren't mass assignable.

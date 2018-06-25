@@ -100,19 +100,7 @@ class CyclePhasesController extends Controller
     public function update(Request $request, $id)
     {
         //
-       /* $cyclephases = Cyclephases::findOrFail($id);
-        $this->validateInput($request , [
-        'name' => 'required|max:60'
-        ]);
-        $input = [
-            'name' => $request['name'],
-            'cycle_description'=> $$request['cycle_description']
-        ];
-        Cyclephases::where('id',$id)
-            ->update($input);
-
-        return redirect()->intended('cyclephases');*/
-
+     
         $cyclephases = Cyclephases::findOrFail($id);
         $this->validateInput($request);
         $input = [

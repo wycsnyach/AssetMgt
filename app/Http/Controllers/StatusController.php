@@ -7,6 +7,16 @@ use App\Status;
 class StatusController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -14,8 +24,10 @@ class StatusController extends Controller
     public function index()
     {
         //
-        $statuses=Status::orderBy('id', 'desc')->paginate(5);
-        return view('statuses.index', compact('statuses'));
+
+         $statuses = Status::orderBy('id', 'desc')->paginate(5);
+        return view('system-mgmt/statuses.index', ['statuses' => $statuses]);
+       
     }
 
     /**
@@ -26,7 +38,7 @@ class StatusController extends Controller
     public function create()
     {
         //
-        return view('statuses.create');
+        return view('system-mgmt/statuses.create');
 
     }
 
@@ -39,19 +51,13 @@ class StatusController extends Controller
     public function store(Request $request)
     {
         //
-         //
-       $this->validate($request,[
-           /* 'id' => 'required',*/
-            'description' => 'required'
-
+          $this -> validateInput($request);
+        Status::create([
+            'name'=>$request['name']
         ]);
+        return redirect()->intended('system-management/statuses');
 
-       $input = $request->all();
-       $status =  Status::create($input);
-       $description= $status ->description;
 
-        //Session::flash('flash_message', 'Task successfully added!');
-        return redirect()->back() -> with("status","Added " .$description. " successfully");
     }
 
     /**
@@ -74,8 +80,15 @@ class StatusController extends Controller
     public function edit($id)
     {
         //
-         $status=Status::find($id);
-        return view('statuses.edit', compact('status'));
+         $statuses = Status::find($id);
+        if($statuses == null || count($statuses) == 0){
+            return redirect()->intended('/system-management/statuses');
+            
+        }
+
+        return view('system-mgmt/statuses.edit', ['statuses' => $statuses]);
+
+         
     }
 
     /**
@@ -88,25 +101,17 @@ class StatusController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this -> validate($request,
-            [
-                
-                'description' => 'required'
-            ]);
-
-        $status = Status::find($id);
-        $status->description = $request -> description;
+        $statuses = Status::findOrFail($id);
+        $this->validateInput($request);
+        $input = [
+            'name' => $request['name']
+            
+        ];
+        Status::where('id', $id)
+            ->update($input);
         
-        $statusSaved = $status->save();
-        $description = $request -> description;
-        /* if saved */
-
-        if( $statusSaved == 1 ){
-
-            return redirect()->back()-> with('status','Saved '.$description.' succesfully');
-        }else{
-            return redirect()->back()-> with('status','Failed '.$description.' not saved');
-        }
+        return redirect()->intended('system-management/statuses');
+        
     }
 
     /**
@@ -118,14 +123,42 @@ class StatusController extends Controller
     public function destroy($id)
     {
         //
-        $status = Status::findOrFail($id);
-      
-        $description = $status->description;
-        $status->delete();
+        Status::where('id', $id)->delete();
+            return redirect()->intended('system-management/statuses');
+    }
 
-        //Session::flash('flash_message', 'Task successfully deleted!');
+    /**
+     * Search department from database base on some specific constraints
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *  @return \Illuminate\Http\Response
+     */
 
-        //return redirect()->route('tasks.index');
-         return redirect()->back()->with('status','Deleted '.$description.' succesfully');
+    public function search(Request $request){
+        $constraints = [
+            'name' => $request['name']
+        ];
+        $statuses = $this->doSearchingQuery($constraints);
+        return view('system-mgmt/statuses.index',['statuses' => $statuses, 'searchingVals' => $constraints]);
+       
+    }
+
+    private function doSearchingQuery($constraints){
+        $query =Status::query();
+        $fields = array_keys($constraints);
+        $index = 0;
+        foreach ($constraints as $constraint){
+            if($constraint != null){
+                $query = $query->where($fields[$index],'like','%' .$constraint. '%');
+            }
+            $index++;
+        }
+        return $query->paginate(5);
+    }
+    private function validateInput($request){
+        $this->validate($request, [
+            
+            'name' =>'required|max:60'
+        ]);
     }
 }

@@ -6,10 +6,10 @@
   <div class="box-header">
     <div class="row">
         <div class="col-sm-8">
-          <h3 class="box-title">List of Asset Types</h3>
+          <h3 class="box-title">Asset Types List</h3>
         </div>
         <div class="col-sm-4">
-          <a class="btn btn-primary" href="{{ route('assettypes.create') }}">Add Asset Type</a>
+          <a class="btn btn-primary" href="{{ route('assettypes.create') }}">Add Assset Type</a>
         </div>
     </div>
   </div>
@@ -34,16 +34,17 @@
             <thead>
               <tr role="row">
                 <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="assettypes: activate to sort column ascending">Asset Type Name</th>
-                <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="assetsubtypes: activate to sort column ascending">Asset SubType</th>
+                <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="assettypes: activate to sort column ascending">Asset Sub Type Code</th>
+                
                 <th tabindex="0" aria-controls="example2" rowspan="1" colspan="2" aria-label="Action: activate to sort column ascending">Select Action</th>
               </tr>
             </thead>
             <tbody>
-            {{$assettypes}}
             @foreach ($assettypes as $assettype)
                 <tr role="row" class="odd">
                   <td>{{ $assettype->name }}</td>
                   <td>{{ $assettype->assetsubtypes_name }}</td>
+                
                   <td>
                     <form class="row" method="POST" action="{{ route('assettypes.destroy', ['id' => $assettype->id]) }}" onsubmit = "return confirm('Are you sure?')">
                         <input type="hidden" name="_method" value="DELETE">
@@ -61,8 +62,9 @@
             </tbody>
             <tfoot>
               <tr>
-                <th width="20%" rowspan="1" colspan="1">Asset Type Name</th>
-                <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="assetsubtypes: activate to sort column ascending">Asset SubType</th>
+                <th width="20%" rowspan="1" colspan="1">Sub Type Name</th>
+                <th width="20%" rowspan="1" colspan="1">Sub Type Code</th>
+               <!--  <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="cycle_description: activate to sort column ascending">Cycle Description</th> -->
                 <th rowspan="1" colspan="2">Select Action</th>
               </tr>
             </tfoot>

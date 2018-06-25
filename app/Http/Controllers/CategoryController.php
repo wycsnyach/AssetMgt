@@ -4,8 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use Illuminate\Support\Facades\DB;
 class CategoryController extends Controller
 {
+
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +26,9 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categories = Category::get()->all();
-        return view('categories.index' , compact( 'categories' ) );
+         $categories = Category::paginate(5);
+        return view('system-mgmt/categories.index', ['categories' => $categories]);
+      
     }
 
     /**
@@ -26,7 +39,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        return view('categories.create');
+        return view('system-mgmt/categories.create');
     }
 
     /**
@@ -38,8 +51,15 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[
-           /* 'id' => 'required',*/
+
+           $this -> validateInput($request);
+        Category::create([
+            'name'=>$request['name']
+        ]);
+        return redirect()->intended('system-management/categories');
+
+      /*  $this->validate($request,[
+          
             'name' => 'required'
 
         ]);
@@ -48,8 +68,8 @@ class CategoryController extends Controller
        $category =  Category::create($input);
        $name= $category ->name;
 
-        //Session::flash('flash_message', 'Task successfully added!');
-        return redirect()->back() -> with("status","Added " .$name. " successfully");
+        
+        return redirect()->back() -> with("status","Added " .$name. " successfully");*/
     }
 
     /**
@@ -72,8 +92,13 @@ class CategoryController extends Controller
     public function edit($id)
     {
         //
-        $category=Category::find($id);
-        return view('categories.edit', compact('category'));
+        $categories = Category::find($id);
+        if($categories == null || count($categories) == 0){
+            return redirect()->intended('/system-management/categories');
+            
+        }
+
+        return view('system-mgmt/categories.edit', ['categories' => $categories]);
     }
 
     /**
@@ -86,7 +111,18 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //
-         $this -> validate($request,
+
+        $categories = Category::findOrFail($id);
+        $this->validateInput($request);
+        $input = [
+            'name' => $request['name']
+            
+        ];
+        Category::where('id', $id)
+            ->update($input);
+        
+        return redirect()->intended('system-management/categories');
+        /* $this -> validate($request,
             [
                 
                 'name' => 'required'
@@ -97,14 +133,12 @@ class CategoryController extends Controller
         
         $categorySaved = $category->save();
         $name = $request -> name;
-        /* if saved */
-
         if( $categorySaved == 1 ){
 
             return redirect()->back()-> with('status','Saved '.$name.' succesfully');
         }else{
             return redirect()->back()-> with('status','Failed '.$name.' not saved');
-        }
+        }*/
     }
 
     /**
@@ -116,14 +150,49 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
-        $category = Category::findOrFail($id);
+
+        Category::where('id', $id)->delete();
+            return redirect()->intended('system-management/categories');
+        /*$category = Category::findOrFail($id);
       
         $name = $category->name;
         $category->delete();
 
-        //Session::flash('flash_message', 'Task successfully deleted!');
+        return redirect()->back()->with('status','Deleted '.$name.' succesfully');*/
+    }
 
-        //return redirect()->route('tasks.index');
-         return redirect()->back()->with('status','Deleted '.$name.' succesfully');
+    /**
+     * Search department from database base on some specific constraints
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *  @return \Illuminate\Http\Response
+     */
+
+    public function search(Request $request){
+        $constraints = [
+            'name' => $request['name']
+        ];
+        $categories = $this->doSearchingQuery($constraints);
+        return view('system-mgmt/categories.index',['categories' => $categories, 'searchingVals' => $constraints]);
+       
+    }
+
+    private function doSearchingQuery($constraints){
+        $query =Category::query();
+        $fields = array_keys($constraints);
+        $index = 0;
+        foreach ($constraints as $constraint){
+            if($constraint != null){
+                $query = $query->where($fields[$index],'like','%' .$constraint. '%');
+            }
+            $index++;
+        }
+        return $query->paginate(5);
+    }
+    private function validateInput($request){
+        $this->validate($request, [
+            
+            'name' =>'required|max:60'
+        ]);
     }
 }

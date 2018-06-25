@@ -1,4 +1,4 @@
-@extends('system-mgmt.assetsubtypes.base')
+@extends('system-mgmt.categories.base')
 @section('action-content')
     <!-- Main content -->
     <section class="content">
@@ -6,10 +6,10 @@
   <div class="box-header">
     <div class="row">
         <div class="col-sm-8">
-          <h3 class="box-title">Asset Sub Types List</h3>
+          <h3 class="box-title">Categories List</h3>
         </div>
         <div class="col-sm-4">
-          <a class="btn btn-primary" href="{{ route('assetsubtypes.create') }}">Add Sub Type</a>
+          <a class="btn btn-primary" href="{{ route('categories.create') }}">Add Category</a>
         </div>
     </div>
   </div>
@@ -19,7 +19,7 @@
         <div class="col-sm-6"></div>
         <div class="col-sm-6"></div>
       </div>
-      <form method="POST" action="{{ route('assetsubtypes.search') }}">
+      <form method="POST" action="{{ route('categories.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Search'])
           @component('layouts.two-cols-search-row', ['items' => ['Name'], 
@@ -33,23 +33,21 @@
           <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr role="row">
-                <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="assetsubtypes: activate to sort column ascending">SubType Name</th>
-                <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="assetsubtypes: activate to sort column ascending">Category Code</th>
+                <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="categories: activate to sort column ascending">Category Name</th>
                 
                 <th tabindex="0" aria-controls="example2" rowspan="1" colspan="2" aria-label="Action: activate to sort column ascending">Select Action</th>
               </tr>
             </thead>
             <tbody>
-            @foreach ($assetsubtypes as $assetsubtype)
+            @foreach ($categories as $category)
                 <tr role="row" class="odd">
-                  <td>{{ $assetsubtype->name }}</td>
-                  <td>{{ $assetsubtype->categories_name }}</td>
+                  <td>{{ $category->name }}</td>
                 
                   <td>
-                    <form class="row" method="POST" action="{{ route('assetsubtypes.destroy', ['id' => $assetsubtype->id]) }}" onsubmit = "return confirm('Are you sure?')">
+                    <form class="row" method="POST" action="{{ route('categories.destroy', ['id' => $category->id]) }}" onsubmit = "return confirm('Are you sure?')">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <a href="{{ route('assetsubtypes.edit', ['id' => $assetsubtype->id]) }}" class="btn btn-warning col-sm-3 col-xs-5 btn-margin">
+                        <a href="{{ route('categories.edit', ['id' => $category->id]) }}" class="btn btn-warning col-sm-3 col-xs-5 btn-margin">
                         Update
                         </a>
                         <button type="submit" class="btn btn-danger col-sm-3 col-xs-5 btn-margin">
@@ -62,7 +60,7 @@
             </tbody>
             <tfoot>
               <tr>
-                <th width="20%" rowspan="1" colspan="1">Sub Type Name</th>
+                <th width="20%" rowspan="1" colspan="1">Category Name</th>
                <!--  <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="cycle_description: activate to sort column ascending">Cycle Description</th> -->
                 <th rowspan="1" colspan="2">Select Action</th>
               </tr>
@@ -72,11 +70,11 @@
       </div>
       <div class="row">
         <div class="col-sm-5">
-          <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing 1 to {{count($assetsubtypes)}} of {{count($assetsubtypes)}} entries</div>
+          <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing 1 to {{count($categories)}} of {{count($categories)}} entries</div>
         </div>
         <div class="col-sm-7">
           <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-            {{ $assetsubtypes->links() }}
+            {{ $categories->links() }}
           </div>
         </div>
       </div>

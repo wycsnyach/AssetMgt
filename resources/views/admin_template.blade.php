@@ -263,34 +263,64 @@ desired effect
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
-        <li class="header">MANAGE</li>
+        <li class="header text-aqua" ><b>MANAGE</b></li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li><a href="{{ route('countries.index')}}"><i class="fa fa-link"></i> <span>Country</span></a></li>
-        <li><a href="{{ route('locations.index')}}"><i class="fa fa-home"></i> <span>Location</span></a></li>
-        <li><a href="{{ route('statuses.index')}}"><i class="fa fa-circle"></i> <span>Assest Status</span></a></li>
-        <li><a href="{{ route('people.index')}}"><i class="fa fa-users"></i> <span>Person</span></a></li>
-        <li><a href="{{ route('categories.index')}}"><i class="fa fa-circle"></i> <span>Asset Category</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-dashboard text-aqua"></i> <span>Dashboard</span></a></li>
+       <!--  <li><a href="{{ route('countries.index')}}"><i class="fa fa-link"></i> <span>Country</span></a></li> -->
+      <!--   <li><a href="{{ route('locations.index')}}"><i class="fa fa-home"></i> <span>Location</span></a></li> -->
+      <!--   <li><a href="{{ route('statuses.index')}}"><i class="fa fa-circle text-aqua"></i> <span>Assest Status</span></a></li> -->
+       <!--  <li><a href="{{ route('people.index')}}"><i class="fa fa-users text-aqua"></i> <span>Person</span></a></li> -->
+      <!--   <li><a href="{{ route('categories.index')}}"><i class="fa fa-circle text-aqua"></i> <span>Asset Category</span></a></li> -->
         <!-- <li><a href="{{ route('assetsubtypes.index')}}"><i class="fa fa-circle"></i> <span>Asset Sub Type</span></a></li>
         <li><a href="{{ route('cyclephases.index')}}"><i class="fa fa-circle"></i> <span>Asset Cycle Phases</span></a></li> -->
-        <li><a href="{{ route('assettypes.index')}}"><i class="fa fa-circle"></i> <span>Asset Types</span></a></li>
+        <!-- <li><a href="{{ route('assettypes.index')}}"><i class="fa fa-circle text-aqua"></i> <span>Asset Types</span></a></li> -->
+        
         
         <li class="treeview">
-          <a href="#"><i class="fa fa-gears"></i> <span>System Management</span>
+          <a href="#"><i class="fa fa-home"></i> <span>Country Management</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('system-management/locations')}}"><i class="fa fa-bell-o"></i>Asset Location</a></li>
-            <li><a href="{{ url('system-management/cyclephases')}}"><i class="fa fa-bell-o"></i>Cycle Phases</a></li>
-            <li><a href="{{ url('system-management/assetsubtypes')}}"><i class="fa fa-bell-o"></i>Asset Sub Type</a></li>
+            <li><a href="{{ url('country-management/countries')}}"><i class="fa fa-link text-aqua"></i>Country</a></li>
+
           </ul>
         </li>
 
-        <li class="header">REPORTS</li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-users"></i> <span>Employee Management</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('employee-management/people')}}"><i class="fa fa-link text-aqua"></i>Person</a></li>
+
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-gears"></i> <span>Asset Management</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('system-management/locations')}}"><i class="fa fa-link text-aqua"></i>Asset Location</a></li>
+            <li><a href="{{ url('system-management/categories')}}"><i class="fa fa-link text-aqua"></i>Asset Category</a></li>
+            <li><a href="{{ url('system-management/cyclephases')}}"><i class="fa fa-link text-aqua"></i>Cycle Phases</a></li>
+            <li><a href="{{ url('system-management/assetsubtypes')}}"><i class="fa fa-link text-aqua"></i>Asset Sub Type</a></li>
+            <li><a href="{{ url('system-management/statuses')}}"><i class="fa fa-link text-aqua"></i>Asset Status</a></li>
+            <li><a href="{{ url('system-management/assettypes')}}"><i class="fa fa-link text-aqua"></i> <span>Asset Types</span></a></li>
+            <li><a href="{{ url('system-management/assets')}}"><i class="fa fa-link text-aqua"></i> <span>Assets</span></a></li>
+             <li><a href="{{ url('system-management/lifecycleevents')}}"><i class="fa fa-link text-aqua"></i>Asset Cycle Events</a></li>
+          </ul>
+        </li>
+
+        <li class="header text-aqua"><b>REPORTS</b></li>
          <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Select Report</span>
+          <a href="#"><i class="fa fa-birthday-cake"></i> <span>Report Management</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

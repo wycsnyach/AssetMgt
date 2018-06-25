@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Person;
-use Yajra\Datatables\Facades\Datatables;
+use Illuminate\Support\Facades\DB;
+
 class PersonController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +27,11 @@ class PersonController extends Controller
         //
         //return view('people.index');
 
-        $people = Person::get()->all();
-        return view('people.index' , compact( 'people' ) );
+       /* $people = Person::get()->all();
+        return view('people.index' , compact( 'people' ) );*/
+
+          $people = Person::paginate(5);
+        return view('employee-mgmt/people.index', ['people' => $people]);
     }
 
     /**
@@ -29,7 +42,8 @@ class PersonController extends Controller
     public function create()
     {
         //
-        return view('people.create');
+        
+        return view('employee-mgmt/people.create');
     }
 
     /**
@@ -41,18 +55,20 @@ class PersonController extends Controller
     public function store(Request $request)
     {
         //
+
+        $this -> validateInput($request);
+        Person::create([
+            'name'=>$request['name']
+        ]);
+        return redirect()->intended('employee-management/people');
+
               $this->validate($request,[
            /* 'id' => 'required',*/
             'name' => 'required'
 
         ]);
 
-       $input = $request->all();
-       $person =  Person::create($input);
-       $name= $person ->name;
-
-        //Session::flash('flash_message', 'Task successfully added!');
-        return redirect()->back() -> with("status","Added " .$name. " successfully");
+       
     }
 
     /**
@@ -75,8 +91,13 @@ class PersonController extends Controller
     public function edit($id)
     {
         //
-        $person=Person::find($id);
-        return view('people.edit', compact('person'));
+         $people = Person::find($id);
+        if($people == null || count($people) == 0){
+            return redirect()->intended('/employee-management/people');
+            
+        }
+
+        return view('employee-mgmt/people.edit', ['people' => $people]);
     }
 
     /**
@@ -89,25 +110,16 @@ class PersonController extends Controller
     public function update(Request $request, $id)
     {
         //
-         $this -> validate($request,
-            [
-                
-                'name' => 'required'
-            ]);
-
-        $person = Person::find($id);
-        $person->name = $request -> name;
+       $people = Person::findOrFail($id);
+        $this->validateInput($request);
+        $input = [
+            'name' => $request['name']
+            
+        ];
+        Person::where('id', $id)
+            ->update($input);
         
-        $personSaved = $person->save();
-        $name = $request -> name;
-        /* if saved */
-
-        if( $personSaved == 1 ){
-
-            return redirect()->back()-> with('status','Saved '.$name.' succesfully');
-        }else{
-            return redirect()->back()-> with('status','Failed '.$name.' not saved');
-        }
+        return redirect()->intended('employee-management/people');
     }
 
     /**
@@ -119,13 +131,8 @@ class PersonController extends Controller
     public function destroy($id)
     {
         //
-          $person = Person::findOrFail($id);
-      
-        $name = $person->name;
-        $person->delete();
-
-       
-         return redirect()->back()->with('status','Deleted '.$name.' succesfully');
+           Person::where('id', $id)->delete();
+            return redirect()->intended('employee-management/people');
     }
 
    /*  public function personData()
@@ -133,4 +140,39 @@ class PersonController extends Controller
         return Datatables::of(Person::query())->make(true);
     }
     */
+
+    /**
+     * Search department from database base on some specific constraints
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *  @return \Illuminate\Http\Response
+     */
+
+    public function search(Request $request){
+        $constraints = [
+            'name' => $request['name']
+        ];
+        $people = $this->doSearchingQuery($constraints);
+        return view('employee-mgmt/people.index',['people' => $people, 'searchingVals' => $constraints]);
+       
+    }
+
+    private function doSearchingQuery($constraints){
+        $query =Person::query();
+        $fields = array_keys($constraints);
+        $index = 0;
+        foreach ($constraints as $constraint){
+            if($constraint != null){
+                $query = $query->where($fields[$index],'like','%' .$constraint. '%');
+            }
+            $index++;
+        }
+        return $query->paginate(5);
+    }
+    private function validateInput($request){
+        $this->validate($request, [
+            
+            'name' =>'required|max:60'
+        ]);
+    }
 }

@@ -8,6 +8,6 @@ class Status extends Model
 {
     //
     protected $fillable =[
-    	'id','description','created_at','updated_at'
+    	'id','name','created_at','updated_at'
     ];
 }
